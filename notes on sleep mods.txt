@@ -1,0 +1,30 @@
+ disables the CPU (Central Processing Unit) and most of its peripherals, but it keeps some components like the RTC (Real-Time Clock), ULP (Ultra-Low-Power) co-processor, and some peripherals like the UART (Universal Asynchronous Receiver-Transmitter) active.
+
+ RTC can be used to wake up the device after a specified time or when a specific event occurs, such as a button press or sensor reading.
+
+Light sleep mode is less power-efficient compared to deep sleep mode but allows for a faster wake-up time, making it suitable for applications where rapid response to events is necessary.
+
+DEEP SLEEP: 
+. It effectively shuts down the entire chip, except for the RTC, which keeps running with very low power consumption. CPU, RAM, and most peripherals are powered off, resulting in minimal power consumption.
+
+The only parts of the chip that remain powered on are:
+
+RTC controller
+ULP coprocessor
+RTC fast memory
+RTC slow memory
+
+To wake up from deep sleep, you typically rely on a timer or external hardware signals. You configure the RTC to wake up the microcontroller at a specific time or in response to an external interrupt (e.g., a button press or a sensor reading).
+Because deep sleep consumes very little power, it is suitable for battery-powered devices that need to conserve energy for extended periods.
+
+NOTE;  when you wake up from deep sleep, your application's state is lost, so you need to initialize everything again. Light sleep is more suitable when you need to maintain some state between sleep cycles but still want to save power. 
+
+
+
+
+-------------setting in esp-idf: 
+Common clock sources for the RTC co-processor in ESP32 may include:
+
+Crystal Oscillator (XTAL): This is a high-accuracy clock source that is suitable for applications requiring precise timekeeping.
+Internal RC Oscillator (RTC_SLOW_CLK): This is an internal, lower-accuracy clock source that consumes less power but may be less accurate over long periods.
+After configuring the RTC clock source, we should use the appropriate ESP-IDF functions to initialize and work with the RTC co-processor as needed. the RTC co-processor can be used for tasks like low-power timing and wake-up functionality during light sleep mode. 
